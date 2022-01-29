@@ -1,0 +1,271 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="panel-heading">
+        <div class="row">
+
+            <div class="col-sm-9 d-flex">
+                <input type="hidden" id="id" value="0">
+                <label>Date</label>
+                <input type="date" class="form-control" placeholder="Date" id="tdate">
+                <label>Time</label>
+                <input type="time" class="form-control" placeholder="Time" id="ttime">
+                <label>Task Status</label>
+                <input type="text" class="form-control" placeholder="Search" id="ttask">
+            </div>
+            <div class="col-lg-3">
+                <div class="btn_group">
+
+                    <button onclick="save()" class="btn btn-primary" title="Save"><i class="fa fa-save"></i></button>
+                    <button onclick="delete()" class="btn btn-danger" title="delete"><i class="fa fa-trash"></i></button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body table-responsive">
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <ul class="action-list">
+                            <li><a href="#" data-tip="edit" title="edit"><i class="fa fa-edit"></i></a></li>
+                            <li><a href="#" data-tip="delete" title="delete"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <ul class="action-list">
+                            <li><a href="#" data-tip="edit" title="edit"><i class="fa fa-edit"></i></a></li>
+                            <li><a href="#" data-tip="delete" title="delete"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <ul class="action-list">
+                            <li><a href="#" data-tip="edit" title="edit"><i class="fa fa-edit"></i></a></li>
+                            <li><a href="#" data-tip="delete" title="delete"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <ul class="action-list">
+                            <li><a href="#" data-tip="edit" title="edit"><i class="fa fa-edit"></i></a></li>
+                            <li><a href="#" data-tip="delete" title="delete"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <ul class="action-list">
+                            <li><a href="#" data-tip="edit" title="edit"><i class="fa fa-edit"></i></a></li>
+                            <li><a href="#" data-tip="delete" title="delete"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+  let save = () => {
+      let id = document.getElementById("id").value;
+      let tdate = document.getElementById("tdate").value;
+      let ttime = document.getElementById("ttime").value;
+      let ttask = document.getElementById("ttask").value;
+
+      if (tdate == "") {
+          document.getElementById("tdate").focus();
+          return false;
+      }
+      if (ttime == "") {
+          document.getElementById("ttime").focus();
+          return false;
+      }
+      if (ttask == "") {
+          document.getElementById("ttask").focus();
+          return false;
+      }
+
+      let tasks = new Array();
+      if (localStorage.getItem("tasks") != null) {
+          tasks = JSON.parse(localStorage.getItem("tasks"));
+      }
+      let tid = Number(document.getElementById("id").value);
+      if (tid == 0) {
+          for (let i = 0; i < tasks.length; i++) {
+              if (tid < tasks[i].id) {
+                  tid = tasks[i].id;
+              }
+          }
+          tid = tid + 1;
+          let task = { id: tid, date: tdate, time: ttime, task: ttask, status: "open" };
+          tasks.push(task);
+      }
+      else {
+          for (let i = 0; i < tasks.length; i++) {
+              if (tasks[i].id == tid) {
+                  tasks[i].date = tdate;
+                  tasks[i].time = ttime;
+                  tasks[i].task = ttask;
+                  tasks[i].status = "open";
+              }
+          }
+      }
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      cleartask();
+      list();
+  }
+
+  let cleartask = () => {
+      document.getElementById("id").value = "0";
+      document.getElementById("tdate").value = "";
+      document.getElementById("ttime").value = "";
+      document.getElementById("ttask").value = "";
+  }
+
+  let list = () => {
+      let tasks = JSON.parse(localStorage.getItem("tasks"));
+      if (tasks != null) {
+
+          let table = document.getElementById("table");
+          let rowcount = table.rows.length;
+
+          for (i = 1; i < rowcount; i++) {
+              table.deleteRow(1);
+          }
+          for (i = 0; i < tasks.length; i++) {
+              let row = table.insertRow(table.rows.length);
+              let cell0 = row.insertCell(0);
+              let cell1 = row.insertCell(1);
+              let cell2 = row.insertCell(2);
+              let cell3 = row.insertCell(3);
+              let cell4 = row.insertCell(4);
+              let cell5 = row.insertCell(5);
+
+              cell0.innerHTML = i + 1;
+              cell1.innerHTML = tasks[i].date;
+              cell2.innerHTML = tasks[i].time;
+              cell3.innerHTML = tasks[i].task;
+              cell4.innerHTML = tasks[i].status;
+              let action = "";
+              if(tasks[i].status == "open"){
+                  action += "<button class='btn btn-primary' onclick='edit(" + tasks[i].id + ")'> <i class='fa fa-edit'></i></button> ";
+                  action += "<button class='btn btn-danger' onclick='deletetask(" + tasks[i].id + ")'> <i class='fa fa-trash'></i></button> ";
+              }
+              if(tasks[i].status == "open")
+              {
+                  action += "<button class='btn btn-success' onclick='changestatus(" + tasks[i].id + ", \"close\")'> <i class='fa fa-close'></i></button>";
+              }else{
+                  action += "<button class='btn btn-warning' onclick='changestatus(" + tasks[i].id + ", \"open\")'> <i class='fa fa-check'></i></button>";
+              }
+              cell5.innerHTML = action;
+
+
+          }
+      }
+  }
+
+  let edit = (id) => {
+      let tasks = JSON.parse(localStorage.getItem("tasks"));
+      for (let i = 0; i < tasks.length; i++) {
+          if (tasks[i].id == id) {
+              document.getElementById("id").value = tasks[i].id;
+              document.getElementById("tdate").value = tasks[i].date;
+              document.getElementById("ttime").value = tasks[i].time;
+              document.getElementById("ttask").value = tasks[i].task;
+
+          }
+      }
+
+
+  }
+
+  let deletetask = (id) => {
+      if (confirm("Sure to delete")) {
+          let tasks = JSON.parse(localStorage.getItem("tasks"));
+          let newtasks = new Array();
+          for (let i = 0; i < tasks.length; i++) {
+              if (tasks[i].id != id) {
+                  newtasks.push(tasks[i]);
+              }
+          }
+          localStorage.setItem("tasks", JSON.stringify(newtasks));
+          list();
+      }
+  }
+
+  let changestatus = (id, status) =>{
+      if (confirm("Sure to change status?")) {
+          let tasks = JSON.parse(localStorage.getItem("tasks"));
+          for (let i = 0; i < tasks.length; i++) {
+              if (tasks[i].id == id) {
+                  tasks[i].status = status;
+              }
+          }
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+          list();
+      }
+  }
+
+  list();
+
+</script>
+
+
+    
+</body>
+</html>
